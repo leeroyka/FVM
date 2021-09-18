@@ -1,7 +1,11 @@
 #ifndef FVM_GUI_QML_APPLICATION_HPP
 #define FVM_GUI_QML_APPLICATION_HPP
 
-#include <HttpServer/httpserver.hpp>
+#include <QVariant>
+#include <QString>
+#include <QFile>
+#include <QSettings>
+#include <QObject>
 #include <Math/Expression.hpp>
 
 namespace Gui {
@@ -48,7 +52,7 @@ public slots:
   void addArgInExpression() const;
   void removeArgumentFromExpression() const;
   int getNumberArgsFromExpression() const;
-  void calculate(QString expression);
+  QString calculate(QString expression);
   //............................................................................
   /*!
    * \brief parseRecivedData преобразование данных в сообщения
@@ -110,7 +114,6 @@ public slots:
 private:
   std::shared_ptr<FVM::Math::Expression> mExpression;
   //.....................................................................
-  std::shared_ptr<HttpServer> mHttpServer; ///< Сервер, слушающий запросы
   std::map<int, QVariantMap> mHistories; ///< map с хешами и полями истории
   QStringList mListUUID; ///< принятые uuid с запросов, для обновления логов
   const QString M_TEMPLATE_ERROR = "<p style='color: red';>Error: %1</p>";///< Шаблон вывода ошибки

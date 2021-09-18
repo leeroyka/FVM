@@ -28,5 +28,5 @@ void FVM::Math::Expression::setExpression(std::string expression)
 
 std::string FVM::Math::Expression::calculate()
 {
-
+    return "";
 }
