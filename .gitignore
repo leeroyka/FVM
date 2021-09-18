@@ -1,0 +1,10 @@
+[Bb]uild*/
+generated_docs/
+node_modules/
+.vs/
+.ycm_extra_conf.py*
+CMakeLists.txt.user
+*.autosave
+*.autosave~
+*.cpp~
+*.orig
