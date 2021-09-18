@@ -37,7 +37,8 @@ int QmlApplication::getNumberArgsFromExpression() const
 QString QmlApplication::calculate(QString expression)
 {
     mExpression->setExpression(expression.toStdString());
-    return "";
+    std::string answer = mExpression->calculate();
+    return QString::fromStdString(answer);
 }
 
 void QmlApplication::addHistoryItem(QVariantMap map)

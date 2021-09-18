@@ -6,9 +6,10 @@ import "../Shared" as Shared
 
 Item{
     //..................................................
+    property string answerText: ""
     function printAnswer(data)
     {
-        nameA.text = data;
+        answerText = data;
     }
 
     //..................................................
@@ -51,7 +52,8 @@ Item{
         Text {
           id: nameA
           leftPadding: 10
-          text: qsTr("a")
+          topPadding: 10
+          text: answerText
         }
       }
       Tab {

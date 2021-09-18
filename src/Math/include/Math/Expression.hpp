@@ -2,8 +2,10 @@
 #define FVM_MATH_EXPRESSION_HPP
 
 #include <evaluator.hpp>
+
 #include <memory>
 #include <vector>
+#include <string>
 
 namespace FVM {
 namespace Math {
@@ -26,10 +28,12 @@ public:
 
   std::string calculate();
 
+  void initVectorArgs();
 private:
-  size_t mNumberArgs;                        ///< Количество аргументов
-  std::string mExpression;                   ///< Выражение
-  std::shared_ptr<MathEvaluator> mEvaluator; ///< Подсчет математических выражений
+  size_t                         mNumberArgs; ///< Количество аргументов
+  std::vector<double>            mArgs;       ///< Аргументы выражения
+  std::string                    mExpression; ///< Выражение
+  std::shared_ptr<MathEvaluator> mEvaluator;  ///< Подсчет математических выражений
 };
 } // namespace Math
 } // namespace FVM
