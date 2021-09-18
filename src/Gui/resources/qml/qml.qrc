@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+		<file>qtquickcontrols2.conf</file>
+        <file>MainWindow/Footer.qml</file>
+        <file>MainWindow/Header.qml</file>
+        <file>MainWindow/Body.qml</file>
+        <file>Shared/TextBox.qml</file>
+        <file>Shared/Settings.qml</file>
+    </qresource>
+</RCC>
