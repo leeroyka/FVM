@@ -13,7 +13,7 @@ Rectangle {
         anchors.leftMargin: 15
         text: qsTr("Function Voxel Methods")
         font.pixelSize: 21
-        font.weight: font.bold
+        font.bold: true
         color: "White"
      }
     Button{

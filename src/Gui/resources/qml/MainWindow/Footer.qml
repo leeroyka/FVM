@@ -48,7 +48,7 @@ Item{
       anchors.bottomMargin: 20
       Tab {
         id: tabExpression
-        title: "A"
+        title: "Function"
         Text {
           id: nameA
           leftPadding: 10
@@ -58,7 +58,7 @@ Item{
       }
       Tab {
         id: tabVoxelModel
-        title: "B"
+        title: "2D"
         Text {
           leftPadding: 10
           id: nameB
@@ -67,7 +67,7 @@ Item{
       }
       Tab {
         id: tab3dModel
-        title: "C"
+        title: "3D"
         Text {
           leftPadding: 10
           id: nameC
