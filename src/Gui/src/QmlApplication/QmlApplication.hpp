@@ -1,12 +1,13 @@
 #ifndef FVM_GUI_QML_APPLICATION_HPP
 #define FVM_GUI_QML_APPLICATION_HPP
 
+#include <Math/Expression.hpp>
+
 #include <QVariant>
 #include <QString>
 #include <QFile>
 #include <QSettings>
 #include <QObject>
-#include <Math/Expression.hpp>
 
 namespace Gui {
 
