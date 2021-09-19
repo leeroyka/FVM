@@ -33,22 +33,17 @@ public:
 
   void setExpression(std::string expression);
 
-  void setLocalGeomCharact(std::vector<double> normal);
-
-  std::vector<double> getLocalGeomCharact() const;
-
   std::string calculate();
 
   void initVectorArgs();
 
   void calculateFunction(std::vector<double>& args); /// Хn+1
 
-  void calculateLocalGeomCharacters(std::vector<double> point); /// ЛГХ
+  std::vector<double> calculateLocalGeomCharacters(std::vector<double> point); /// ЛГХ
 
 private:
   size_t                         mNumberArgs; ///< Количество аргументов
   std::vector<double>            mArgs;       ///< Аргументы выражения
-  std::vector<double>            mLocalGeomCh;///< Локальные геометрические характер.
   std::vector<FVM::Math::Range>  mRanges;     ///< Диапазон значений
   std::string                    mExpression; ///< Выражение
   std::shared_ptr<MathEvaluator> mEvaluator;  ///< Подсчет математических выражений

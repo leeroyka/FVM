@@ -29,16 +29,6 @@ void FVM::Math::Expression::setExpression(std::string expression)
     mExpression = expression;
 }
 
-void FVM::Math::Expression::setLocalGeomCharact(std::vector<double> normal)
-{
-    mLocalGeomCh = normal;
-}
-
-std::vector<double> FVM::Math::Expression::getLocalGeomCharact() const
-{
-    return mLocalGeomCh;
-}
-
 std::string FVM::Math::Expression::calculate()
 {
     initVectorArgs();
@@ -53,6 +43,7 @@ std::string FVM::Math::Expression::calculate()
 
     double result;
     result = mEvaluator->eval(mExpression);
+
 
     return std::to_string(result);
 }
@@ -75,7 +66,8 @@ void FVM::Math::Expression::calculateFunction(std::vector<double>& args)
     args.push_back(mEvaluator->eval(mExpression));
 }
 
-void FVM::Math::Expression::calculateLocalGeomCharacters(std::vector<double> point)
+std::vector<double>
+FVM::Math::Expression::calculateLocalGeomCharacters(std::vector<double> point)
 {
     /*
      * Составляем матрицу для каждого аргумента +1
@@ -132,5 +124,5 @@ void FVM::Math::Expression::calculateLocalGeomCharacters(std::vector<double> poi
     {
         normal[i] = normal[i]/normalFactor;
     }
-    setLocalGeomCharact(normal);
+    return normal;
 }
