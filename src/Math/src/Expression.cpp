@@ -1,5 +1,7 @@
 #include <Math/Expression.hpp>
 
+#include <math.h>
+
 FVM::Math::Expression::Expression()
 {
     mNumberArgs = 1;
@@ -27,9 +29,23 @@ void FVM::Math::Expression::setExpression(std::string expression)
     mExpression = expression;
 }
 
+void FVM::Math::Expression::setLocalGeomCharact(std::vector<double> normal)
+{
+    mLocalGeomCh = normal;
+}
+
+std::vector<double> FVM::Math::Expression::getLocalGeomCharact() const
+{
+    return mLocalGeomCh;
+}
+
 std::string FVM::Math::Expression::calculate()
 {
     initVectorArgs();
+    std::vector<double> test;
+    test.push_back(0);
+    test.push_back(1);
+    calculateLocalGeomCharacters(test);
     for(size_t i=0;i < mArgs.size(); i++)
     {
         mEvaluator->appendVariable("x_"+std::to_string(i+1),mArgs[i]);
@@ -46,7 +62,6 @@ void FVM::Math::Expression::initVectorArgs()
     for(size_t i = 0; i < getNumberArgs(); i++)
     {
         mArgs.push_back(1.);
-        mStep.push_back(0.001);
         mRanges.push_back({-100,100,1});
     }
 }
@@ -74,6 +89,7 @@ void FVM::Math::Expression::calculateLocalGeomCharacters(std::vector<double> poi
     size_t numArg = getNumberArgs();
     calculateFunction(point);
     std::vector<std::vector<double>> points;
+    point.push_back(1.);
     points.push_back(point);
     for(size_t i=0; i<numArg; i++)
     {
@@ -93,6 +109,7 @@ void FVM::Math::Expression::calculateLocalGeomCharacters(std::vector<double> poi
                 if(column == i)
                     continue;
                 components[pos] = points[row][column];
+                pos++;
             }
         }
         simple_matrix::matrix tempMatrix(numArg+1,
@@ -100,5 +117,20 @@ void FVM::Math::Expression::calculateLocalGeomCharacters(std::vector<double> poi
                                          components.get());
         matrices.push_back(tempMatrix);
     }
-
+    std::vector<double> normal;
+    for(auto matrix : matrices)
+    {
+        normal.push_back(matrix.det());
+    }
+    double normalFactor=0;
+    for(auto n : normal)
+    {
+        normalFactor+= n*n;
+    }
+    normalFactor = sqrt(normalFactor);
+    for(size_t i = 0; i < normal.size(); i++)
+    {
+        normal[i] = normal[i]/normalFactor;
+    }
+    setLocalGeomCharact(normal);
 }
