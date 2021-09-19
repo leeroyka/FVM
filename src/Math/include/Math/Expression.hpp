@@ -29,6 +29,9 @@ public:
   std::string calculate();
 
   void initVectorArgs();
+
+  void calculateFunction(std::vector<double>& args);
+  void calculateLocalGeomCharacters(); /// ЛГХ
 private:
   size_t                         mNumberArgs; ///< Количество аргументов
   std::vector<double>            mArgs;       ///< Аргументы выражения

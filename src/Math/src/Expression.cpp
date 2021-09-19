@@ -48,3 +48,17 @@ void FVM::Math::Expression::initVectorArgs()
         mArgs.push_back(1.);
     }
 }
+
+void FVM::Math::Expression::calculateFunction(std::vector<double> &args)
+{
+    for(size_t i=0;i < args.size(); i++)
+    {
+        mEvaluator->appendVariable("x_"+std::to_string(i+1),args[i]);
+    }
+    args.push_back(mEvaluator->eval(mExpression));
+}
+
+void FVM::Math::Expression::calculateLocalGeomCharacters()
+{
+
+}
