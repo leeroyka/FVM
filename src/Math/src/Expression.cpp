@@ -46,6 +46,7 @@ void FVM::Math::Expression::initVectorArgs()
     for(size_t i = 0; i < getNumberArgs(); i++)
     {
         mArgs.push_back(1.);
+        mStep.push_back(0.001);
     }
 }
 
@@ -60,5 +61,14 @@ void FVM::Math::Expression::calculateFunction(std::vector<double> &args)
 
 void FVM::Math::Expression::calculateLocalGeomCharacters()
 {
+    /*
+     * Составляем матрицу для каждого аргумента +1
+     * Считаем определители
+     * Нормируем определители
+     * Составляем конечное уравнение с компонентами нормали
+     * Выражаем последний аргумент, через остальные
+     *
+    */
+    std::vector<simple_matrix::matrix> matrices;
 
 }

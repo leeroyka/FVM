@@ -2,6 +2,7 @@
 #define FVM_MATH_EXPRESSION_HPP
 
 #include <evaluator.hpp>
+#include <matrix.hpp>
 
 #include <memory>
 #include <vector>
@@ -30,13 +31,17 @@ public:
 
   void initVectorArgs();
 
-  void calculateFunction(std::vector<double>& args);
+  void calculateFunction(std::vector<double>& args); /// Хn
+
   void calculateLocalGeomCharacters(); /// ЛГХ
+
 private:
   size_t                         mNumberArgs; ///< Количество аргументов
   std::vector<double>            mArgs;       ///< Аргументы выражения
+  std::vector<double>            mStep;       ///< Шаг дискретизации
   std::string                    mExpression; ///< Выражение
   std::shared_ptr<MathEvaluator> mEvaluator;  ///< Подсчет математических выражений
+
 };
 } // namespace Math
 } // namespace FVM
