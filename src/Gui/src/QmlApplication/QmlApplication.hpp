@@ -7,7 +7,6 @@
 #include <QString>
 #include <QFile>
 #include <QSettings>
-#include <QObject>
 
 namespace Gui {
 

@@ -170,7 +170,9 @@ double matrix::det() const {
 	if (m_ == 2) // Might as well speed things up
 		return ((*this)(0, 0) * (*this)(1, 1)) - ((*this)(0, 1) * (*this)(1, 0));
 
-	uint p[n_], v[n_];
+    //uint p[n_], v[n_];
+    uint *p = new uint[n_];
+    uint *v = new uint[n_];
 	permutation_init(n_, p, v);
 	double detsum = 0, prod;
 	int sgn = 1;
