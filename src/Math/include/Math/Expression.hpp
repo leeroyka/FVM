@@ -11,6 +11,12 @@
 namespace FVM {
 namespace Math {
 
+struct Range {
+    double min;
+    double max;
+    double step;
+};
+
 class Expression
 {
 public:
@@ -31,14 +37,15 @@ public:
 
   void initVectorArgs();
 
-  void calculateFunction(std::vector<double>& args); /// Хn
+  void calculateFunction(std::vector<double>& args); /// Хn+1
 
-  void calculateLocalGeomCharacters(); /// ЛГХ
+  void calculateLocalGeomCharacters(std::vector<double> point); /// ЛГХ
 
 private:
   size_t                         mNumberArgs; ///< Количество аргументов
   std::vector<double>            mArgs;       ///< Аргументы выражения
   std::vector<double>            mStep;       ///< Шаг дискретизации
+  std::vector<FVM::Math::Range>  mRanges;     ///< Диапазон значений
   std::string                    mExpression; ///< Выражение
   std::shared_ptr<MathEvaluator> mEvaluator;  ///< Подсчет математических выражений
 
