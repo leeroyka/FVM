@@ -29,6 +29,18 @@ void FVM::Math::Expression::setExpression(std::string expression)
     mExpression = expression;
 }
 
+void FVM::Math::Expression::setVoxelView(std::vector<std::vector<std::vector<double>>>
+                                         voxelView)
+{
+    mVoxelViews = voxelView;
+}
+
+std::vector<std::vector<std::vector<double>>>
+FVM::Math::Expression::getVoxelView() const
+{
+    return mVoxelViews;
+}
+
 std::string FVM::Math::Expression::calculate()
 {
     initVectorArgs();
@@ -44,6 +56,8 @@ std::string FVM::Math::Expression::calculate()
     double result;
     result = mEvaluator->eval(mExpression);
 
+    if(getNumberArgs() == 2)
+        calculateVoxelView();
 
     return std::to_string(result);
 }
@@ -125,4 +139,21 @@ FVM::Math::Expression::calculateLocalGeomCharacters(std::vector<double> point)
         normal[i] = normal[i]/normalFactor;
     }
     return normal;
+}
+
+void FVM::Math::Expression::calculateVoxelView()
+{
+    //TODO: распараллелить
+    std::vector<std::vector<std::vector<double>>> voxelViews;
+    for(double row = mRanges[0].min; row <= mRanges[0].max; row += mRanges[0].step)
+    {
+        std::vector<std::vector<double>> voxelRow;
+        for(double column = mRanges[1].min; column <= mRanges[1].max; column += mRanges[1].step)
+        {
+            std::vector<double> views = calculateLocalGeomCharacters({row, column});
+            voxelRow.push_back(views);
+        }
+        voxelViews.push_back(voxelRow);
+    }
+    setVoxelView(voxelViews);
 }

@@ -58,7 +58,7 @@ Item{
       }
       Tab {
         id: tabVoxelModel
-        title: "2D"
+        title: "Voxel View"
         Text {
           leftPadding: 10
           id: nameB
