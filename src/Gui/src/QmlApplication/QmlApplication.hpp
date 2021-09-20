@@ -54,6 +54,10 @@ public slots:
   void removeArgumentFromExpression() const;
   int getNumberArgsFromExpression() const;
   QString calculate(QString expression);
+  QVariantList getVoxelView();
+  QVariantList getMatrixValues() const;
+  double getMaxValue() const;
+  void setRange(double min, double max, double step);
   //............................................................................
   /*!
    * \brief parseRecivedData преобразование данных в сообщения

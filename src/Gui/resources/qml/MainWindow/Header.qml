@@ -1,6 +1,8 @@
 import QtQuick 2.10
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Material 2.12
+
 
 Rectangle {
     anchors.fill: parent
@@ -20,7 +22,8 @@ Rectangle {
         id: buttonShowSettings
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.leftMargin: parent.width - buttonShowSettings.width
+        anchors.topMargin: (parent.height/2) - (buttonShowSettings.height/2)
+        anchors.leftMargin: parent.width - buttonShowSettings.width - 10
         text: qsTr('Настройки')
         onClicked: settingsGateway.open()
     }

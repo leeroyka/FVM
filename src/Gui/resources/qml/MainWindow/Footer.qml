@@ -7,9 +7,81 @@ import "../Shared" as Shared
 Item{
     //..................................................
     property string answerText: ""
+    property double voxelSize: 1
+    property double min: -3
+    property double max: 3
+    property double step: 0.05
+    property int voxelPadding: 20
+    property variant arrayVoxelViews
+    property variant functionView
     function printAnswer(data)
     {
-        answerText = data;
+        //answerText = data;
+    }
+    function updateVoxelView()
+    {
+      if(qmlApp.getNumberArgsFromExpression()!=2)
+        return;
+      for(var i in arrayVoxelViews)
+      {
+        arrayVoxelViews[i].destroy();
+      }
+      arrayVoxelViews = []
+      for(var i=0; i<4;i++)
+      {
+        var vv = componentVoxelView.createObject(tabVoxelModel, {});
+        arrayVoxelViews[i] = vv;
+      }
+    }
+    function updateFunctionView()
+    {
+      if(qmlApp.getNumberArgsFromExpression()!=2)
+        return;
+      functionView = componentFunctionView.createObject(tabExpression, {});
+    }
+    function drawFunctionView(ctx)
+    {
+      var matrix = qmlApp.getMatrixValues();
+      var max    = qmlApp.getMaxValue();
+      for(var row = 0; row < matrix.length; row++)
+      {
+        var rowList = matrix[row];
+        for(var value = 0; value<rowList.length; value++)
+        {
+          var pointColor = rowList[value]/max;
+          ctx.fillStyle = Qt.rgba(pointColor, pointColor, pointColor, 1);
+          ctx.fillRect(row*voxelSize+voxelPadding,
+                       value*voxelSize+voxelPadding,
+                       voxelSize,
+                       voxelSize)
+        }
+      }
+    }
+
+    function drawVoxelView(ctx)
+    {
+
+      var voxelView = qmlApp.getVoxelView();
+      for(var num=0;num<4;num++)
+      {
+        for(var row=0;row<voxelView.length;row++)
+        {
+          var rowList = voxelView[row];
+          for(var column=0;column<rowList.length;column++)
+          {
+            var pointColor = rowList[column][num];
+            pointColor += 1;
+            pointColor /= 2;
+            ctx.fillStyle = Qt.rgba(pointColor, pointColor, pointColor, 1);
+
+            ctx.fillRect(row*voxelSize+voxelView.length*voxelSize*num*1.05+voxelPadding,
+                         column*voxelSize+voxelPadding,
+                         voxelSize,
+                         voxelSize);
+          }
+
+        }
+      }
     }
 
     //..................................................
@@ -36,6 +108,36 @@ Item{
             listUUID.currentIndex = listUUID.count - 1
     }
     //.......................................................................
+    Component {
+      id: componentVoxelView;
+      Canvas {
+        id: canvasVoxelView
+
+        anchors.leftMargin: 20;
+        anchors.topMargin: 20;
+        width: parent.width
+        height: parent.height
+        onPaint: {
+          var ctx = getContext("2d");
+          drawVoxelView(ctx)
+        }
+      }
+    }
+    Component {
+      id: componentFunctionView;
+      Canvas {
+        id: canvasFunctionView
+
+        anchors.leftMargin: 20;
+        anchors.topMargin: 20;
+        width: parent.width
+        height: parent.height
+        onPaint: {
+          var ctx = getContext("2d");
+          drawFunctionView(ctx)
+        }
+      }
+    }
     TabView {
       id: tabViewAnswer
       anchors.fill: parent
@@ -59,15 +161,11 @@ Item{
       Tab {
         id: tabVoxelModel
         title: "Voxel View"
-        Text {
-          leftPadding: 10
-          id: nameB
-          text: qsTr("b")
-        }
       }
       Tab {
         id: tab3dModel
         title: "3D"
+        enabled: false
         Text {
           leftPadding: 10
           id: nameC

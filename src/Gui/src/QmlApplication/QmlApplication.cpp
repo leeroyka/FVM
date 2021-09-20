@@ -41,6 +41,63 @@ QString QmlApplication::calculate(QString expression)
     return QString::fromStdString(answer);
 }
 
+QVariantList QmlApplication::getVoxelView()
+{
+  auto voxelView = mExpression->getVoxelView();
+
+  if(voxelView.empty())
+    return {};
+  QVariantList result;
+  for(auto row : voxelView)
+  {
+    QVariantList tempColumn;
+    for(auto column : row)
+    {
+      QVariantList tempVoxelView;
+      for(auto numVoxelView : column)
+      {
+
+        tempVoxelView.push_back(numVoxelView);
+      }
+      tempColumn.push_back(tempVoxelView);
+    }
+    result.push_back(tempColumn);
+  }
+  return result;
+}
+
+QVariantList QmlApplication::getMatrixValues() const
+{
+  auto matrixValues = mExpression->getMatrixValues();
+
+  if(matrixValues.empty())
+    return {};
+
+  QVariantList result;
+  for(auto row : matrixValues)
+  {
+    QVariantList tempColumn;
+    for(auto value : row)
+    {
+      tempColumn.push_back(value);
+    }
+    result.push_back(tempColumn);
+  }
+  return result;
+}
+
+double QmlApplication::getMaxValue() const
+{
+  if(mExpression->getMatrixValues().empty())
+    return 0;
+  return mExpression->getMaxValue();
+}
+
+void QmlApplication::setRange(double min, double max, double step)
+{
+  mExpression->setRange(min,max,step);
+}
+
 void QmlApplication::addHistoryItem(QVariantMap map)
 {
     QString titleHistory = QString("%1 %2 %3 %4").arg(

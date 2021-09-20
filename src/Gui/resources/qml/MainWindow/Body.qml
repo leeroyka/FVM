@@ -36,8 +36,11 @@ Item{
         dialogError.open()
           return
       }
+      qmlApp.setRange(footer.min, footer.max, footer.step)
       var answer = qmlApp.calculate(func)
       footer.printAnswer(answer)
+      footer.updateVoxelView()
+      footer.updateFunctionView()
     }
 
     function clickedArgButton(buttonId)

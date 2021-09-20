@@ -25,10 +25,10 @@ Window {
 
     id: mainWindow
     visible: true
-    width: 640
+    width: 520
     height: 500
-    minimumWidth: 640
-    minimumHeight: 480
+    minimumWidth: 520
+    minimumHeight: 500
     title: qsTr("FVM")
     Material.theme: Material.Dark
     //загрузка формы
@@ -96,15 +96,21 @@ Window {
         id: footer
         anchors.top: body.bottom
         anchors.left: body.left
+        anchors.bottomMargin: 20
         Layout.minimumHeight: 200
     }
   }
     Popup{
         id: settingsGateway
         leftMargin: parent.width - 300
+        background: Rectangle {
+          color: "#e8e8e8"
+        }
+
         contentItem: Shared.Settings{
             id: widgetSettings
         }
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
         modal: true
     }
 }
