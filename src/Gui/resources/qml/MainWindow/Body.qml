@@ -7,8 +7,6 @@ import QtQuick.Dialogs 1.2
 import "../Shared" as Shared
 
 Item{
-
-    //..........................................................................
     property variant arrayButtonArgs
     function updateArgs()
     {
@@ -36,8 +34,11 @@ Item{
         dialogError.open()
           return
       }
+      qmlApp.setRange(footer.min, footer.max, footer.step)
       var answer = qmlApp.calculate(func)
       footer.printAnswer(answer)
+      footer.updateVoxelView()
+      footer.updateFunctionView()
     }
 
     function clickedArgButton(buttonId)
@@ -55,8 +56,6 @@ Item{
       updateArgs();
     }
 
-    //..........................................................................
-
     function updateDataFromHistory(data){
         mainWindow.requestIp = data["IP"]
         inputJsonData.text = data["JSON"]
@@ -65,57 +64,6 @@ Item{
         mainWindow.requestType = data["TYPE"]
     }
 
-    function addHistory(history){
-        modelListHistory.append({"hash" : history["HASH"], "text" : history["TEXT"]})
-        listUsedRequests.currentIndex = listUsedRequests.count - 1
-    }
-
-    function sendRequest(data, isLogger){
-        data = qmlApp.isCorrectJson(data)
-        //проверка структуры json
-        if(!data){
-          dialogError.setText("Ошибка! Некорректная структура введеного JSON!")
-          dialogError.open()
-            return
-        }
-
-        var xhr = new XMLHttpRequest()
-        var message = ''
-        var url = 'HTTP://' + mainWindow.requestIp +':'+ mainWindow.requestPort +
-                "/" + mainWindow.requestServiceName
-        if(mainWindow.requestType === 'GET'){
-            url += data
-        }
-        xhr.open(mainWindow.requestType, url)
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
-        xhr.onreadystatechange = function(){
-          if(xhr.readyState === xhr.DONE && xhr.status == 200){
-              if((xhr.responseText.split(' ')[1]) !== '200'){
-                  dialogError.setText(xhr.responseText)
-                  dialogError.open()
-              }
-              if(!isLogger)
-                footer.appendUUID(qmlApp.getUUID(xhr.responseText))
-          }
-          else if(xhr.status == 0){
-              dialogError.setText("Ответ: нет ответа / не в сети\n")
-              dialogError.open()
-          }
-        }
-        xhr.send(data)
-        qmlApp.addHistoryItem(toVariantMap(mainWindow.requestType))
-    }
-
-    function toVariantMap(connectType){
-        var variantMap = {}
-        variantMap["IP"] = mainWindow.requestIp
-        variantMap["PORT"] = mainWindow.requestPort
-        variantMap["JSON"] = inputJsonData.text
-        variantMap["TYPE"] = connectType
-        variantMap["SNAME"] = mainWindow.requestServiceName
-
-        return variantMap
-    }
     DropArea{
         anchors.fill: parent
         onDropped: {
@@ -135,7 +83,6 @@ Item{
       updateArgs();
     }
 
-    //.........................................................................
     Component {
       id: buttonArg;
       Button {
@@ -223,12 +170,10 @@ Item{
               calculate(inputFunction.text)
         }
     }
-    //.........................................................................
 
             Shortcut{
                 sequence: "Ctrl+Return"
                 onActivated: {
-                    sendRequest(inputJsonData.text, false)
                     footer.outText = ''
                 }
             }

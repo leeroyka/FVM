@@ -1,6 +1,8 @@
 import QtQuick 2.10
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Material 2.12
+
 
 Rectangle {
     anchors.fill: parent
@@ -13,14 +15,15 @@ Rectangle {
         anchors.leftMargin: 15
         text: qsTr("Function Voxel Methods")
         font.pixelSize: 21
-        font.weight: font.bold
+        font.bold: true
         color: "White"
      }
     Button{
         id: buttonShowSettings
         anchors.top: parent.top
         anchors.left: parent.left
-        anchors.leftMargin: parent.width - buttonShowSettings.width
+        anchors.topMargin: (parent.height/2) - (buttonShowSettings.height/2)
+        anchors.leftMargin: parent.width - buttonShowSettings.width - 10
         text: qsTr('Настройки')
         onClicked: settingsGateway.open()
     }

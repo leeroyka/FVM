@@ -11,6 +11,7 @@ add_library(${Component}
 target_link_libraries(${Component}
 PUBLIC
   MathEvaluator
+  SimpleMatrix
 )
 
 target_include_directories(${Component}

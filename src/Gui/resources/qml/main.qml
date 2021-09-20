@@ -10,31 +10,18 @@ import "./MainWindow" as MainWindow
 import "./Shared" as Shared
 
 Window {
-    property string requestIp: '127.0.0.1'
-    property string requestPort: '8000'
-    property string requestType: 'POST'
-    property string requestServiceName: 'gateway_tasks'
-    property string timeToRepeat: '1'
-    property alias requestRepeat: updaterLogs.repeat
-    property string requestData:
-        '{\"port\":\"8008\",
-        \"method\":\"route_services\",
-        \"service\":\"log_reader_tasks\",
-        \"return\":\"logs\",
-        \"uuid":\"' + footer.uuid +'\"}'
-
     id: mainWindow
     visible: true
-    width: 640
+    width: 520
     height: 500
-    minimumWidth: 640
-    minimumHeight: 480
+    minimumWidth: 520
+    minimumHeight: 500
     title: qsTr("FVM")
     Material.theme: Material.Dark
     //загрузка формы
     Loader{
         Component.onCompleted: {
-          qmlApp.requestToLoadHistory()
+          //
         }
     }
     Connections {
@@ -47,26 +34,9 @@ Window {
           footer.printLogs(data)
         }
 
-        onUpdateFieldsHistory:{
-            body.updateDataFromHistory(data)
-            widgetSettings.setCurrentTypeRequest(data["TYPE"])
-        }
-
-        onAddHistoryInList:{
-            body.addHistory(titleHistory)
-        }
-
     }
     Timer{
-        id: updaterLogs
-        repeat: false
-        interval: timeToRepeat + '000'
-        onTriggered: {
-            if(footer.uuid)
-                body.sendRequest(requestData, true)
-            else
-                updaterLogs.stop()
-        }
+
     }
 
     ////////шапка/////////
@@ -96,15 +66,21 @@ Window {
         id: footer
         anchors.top: body.bottom
         anchors.left: body.left
+        anchors.bottomMargin: 20
         Layout.minimumHeight: 200
     }
   }
     Popup{
         id: settingsGateway
         leftMargin: parent.width - 300
+        background: Rectangle {
+          color: "#e8e8e8"
+        }
+
         contentItem: Shared.Settings{
             id: widgetSettings
         }
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
         modal: true
     }
 }

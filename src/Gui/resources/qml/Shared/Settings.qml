@@ -4,57 +4,49 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Item{
-    function setCurrentTypeRequest(requestType){
-        comboSettingsTypeRequest.currentIndex =
-                comboSettingsTypeRequest.find(mainWindow.requestType)
-    }
+
     GridLayout{
         id: grid
         columns: 2
         Label{
-            text: qsTr("Настройка шлюза")
+            text: qsTr("Настройки отображения")
             Layout.columnSpan: 2
             font.bold: true
             font.pointSize: 14
         }
+
         Label{
-            text: qsTr('Метод')
-        }
-        ComboBox {
-            id: comboSettingsTypeRequest
-            editable: false
-            model: ListModel{
-                id: modelSettingsTypeRequest
-                ListElement {text : "POST";}
-                ListElement {text : "PUT";}
-                ListElement {text : "GET";}
-    //                ListElement {text : "REMOVE";}
-            }
-            onCurrentIndexChanged: mainWindow.requestType =
-                                           comboSettingsTypeRequest.currentText}
-        Label{
-            text: qsTr('IP адрес')
+            text: qsTr('Voxel size')
         }
         TextField{
-            id: inputIP
-            text: mainWindow.requestIp
-            onTextChanged: mainWindow.requestIp = text
+            id: inputVoxelSize
+            text: footer.voxelSize
+            onTextChanged: footer.voxelSize = parseFloat(text)
         }
         Label{
-            text: qsTr('Порт')
+            text: qsTr('Min')
         }
         TextField{
-            id: inputPort
-            text: mainWindow.requestPort
-            onTextChanged: mainWindow.requestPort = text
+            id: inputMin
+            text: footer.min
+            onTextChanged: footer.min = parseFloat(text)
         }
         Label{
-            text: qsTr('Endpoind')
+            text: qsTr('Max')
         }
         TextField{
-            id: inputServiceName
-            text: mainWindow.requestServiceName
-            onTextChanged: mainWindow.requestServiceName = text
+            id: inputMax
+            text: footer.max
+            onTextChanged: footer.max = parseFloat(text)
         }
+        Label{
+            text: qsTr('Step')
+        }
+        TextField{
+            id: inputStep
+            text: footer.step
+            onTextChanged: footer.step = parseFloat(text)
+        }
+
     }
 }
