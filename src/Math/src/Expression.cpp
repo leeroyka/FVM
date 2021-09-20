@@ -116,18 +116,19 @@ FVM::Math::Expression::calculateLocalGeomCharacters(std::vector<double> point)
      * Выражаем последний аргумент, через остальные
      *
     */
-    if(point[0]==0)
-      point[0]=0;
     std::vector<simple_matrix::matrix> matrices;
     size_t numArg = getNumberArgs();
-    calculateFunction(point);
+    std::vector<double> firstPoint(point);
+    calculateFunction(firstPoint);
     std::vector<std::vector<double>> points;
-    point.push_back(1.);
-    points.push_back(point);
+    firstPoint.push_back(1.);
+    points.push_back(firstPoint);
     for(size_t i=0; i<numArg; i++)
     {
         std::vector<double> tempPoint(point);
         tempPoint[i] += mRanges[i].step;
+        calculateFunction(tempPoint);
+        tempPoint.push_back(1.);
         points.push_back(tempPoint);
     }
     for(size_t i=0; i<numArg+2; i++)
