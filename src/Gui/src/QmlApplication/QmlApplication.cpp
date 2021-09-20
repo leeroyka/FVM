@@ -84,6 +84,13 @@ double QmlApplication::getMaxValue() const
   return mExpression->getMaxValue();
 }
 
+double QmlApplication::getMinValue() const
+{
+    if(mExpression->getMatrixValues().empty())
+      return 0;
+    return mExpression->getMinValue();
+}
+
 void QmlApplication::setRange(double min, double max, double step)
 {
   mExpression->setRange(min,max,step);

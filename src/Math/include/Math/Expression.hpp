@@ -87,6 +87,12 @@ public:
   double getMaxValue() const;
 
   /*!
+   * \brief getMinValue Получить минимальное значение функции
+   * \return Минимальное значение функции
+   */
+  double getMinValue() const;
+
+  /*!
    * \brief calculate Вычислить функцию
    * \return
    */
@@ -121,9 +127,10 @@ private:
   std::vector<FVM::Math::Range>  mRanges;       ///< Диапазон значений
   std::string                    mExpression;   ///< Выражение
   double                         mMaxValue;     ///< Максимальное значение функции
+  double                         mMinValue;     ///< Минимальное значение функции
   double                         mRangeMin;     ///< Минимальное значение диапазона
-  double                         mRangeMax;     ///<
-  double                         mRangeStep;    ///<
+  double                         mRangeMax;     ///< Максимальное значение диапазона
+  double                         mRangeStep;    ///< Шаг дискредитации
   std::shared_ptr<MathEvaluator> mEvaluator;    ///< Подсчет математических выражений
   std::vector<std::vector<std::vector<double>>>
                                  mVoxelViews;   ///< Воксельное представление для трехмерного объекта

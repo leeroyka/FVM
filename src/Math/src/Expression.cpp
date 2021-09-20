@@ -63,7 +63,12 @@ std::vector<std::vector<double> > FVM::Math::Expression::getMatrixValues() const
 
 double FVM::Math::Expression::getMaxValue() const
 {
-  return mMaxValue;
+    return mMaxValue;
+}
+
+double FVM::Math::Expression::getMinValue() const
+{
+    return mMinValue;
 }
 
 std::string FVM::Math::Expression::calculate()
@@ -193,11 +198,16 @@ void FVM::Math::Expression::calculateVoxelView()
             if(isFirst)
             {
               mMaxValue = point[point.size()-1];
+              mMinValue = point[point.size()-1];
               isFirst = false;
             }
             else if (point[point.size()-1]> mMaxValue)
             {
               mMaxValue = point[point.size()-1];
+            }
+            else if (point[point.size()-1]< mMinValue)
+            {
+                mMinValue = point[point.size()-1];
             }
         }
         matrixFunction.push_back(functionRow);

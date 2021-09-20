@@ -75,6 +75,12 @@ public slots:
   Q_INVOKABLE double getMaxValue() const;
 
   /*!
+   * \brief getMinValue Получение минимального значения функции
+   * \return Минимальное значение функции
+   */
+  Q_INVOKABLE double getMinValue() const;
+
+  /*!
    * \brief setRange Установка диапазона значений для расчета функции
    * \param min Минимальное значение аргумента функции
    * \param max Максимальное значение аргумента функции

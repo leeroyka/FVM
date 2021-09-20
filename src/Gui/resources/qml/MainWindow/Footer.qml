@@ -42,12 +42,14 @@ Item{
     {
       var matrix = qmlApp.getMatrixValues();
       var max    = qmlApp.getMaxValue();
+      var min    = qmlApp.getMinValue();
+      var delta  = 0 - min;
       for(var row = 0; row < matrix.length; row++)
       {
         var rowList = matrix[row];
         for(var value = 0; value<rowList.length; value++)
         {
-          var pointColor = rowList[value]/max;
+          var pointColor = (rowList[value]+delta)/(max+delta);
           ctx.fillStyle = Qt.rgba(pointColor, pointColor, pointColor, 1);
           ctx.fillRect(row*voxelSize+voxelPadding,
                        value*voxelSize+voxelPadding,
@@ -93,11 +95,9 @@ Item{
         outputData.text += data
     }
 
-    property alias outText: outputData.text
-    property alias uuid: listUUID.currentText
     function setUpDataOutput(data)
     {
-        outText += data
+
     }
     Component {
       id: componentVoxelView;
