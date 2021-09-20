@@ -4,10 +4,6 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Item{
-    function setCurrentTypeRequest(requestType){
-        comboSettingsTypeRequest.currentIndex =
-                comboSettingsTypeRequest.find(mainWindow.requestType)
-    }
 
     GridLayout{
         id: grid

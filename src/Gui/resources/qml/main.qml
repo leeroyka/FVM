@@ -10,19 +10,6 @@ import "./MainWindow" as MainWindow
 import "./Shared" as Shared
 
 Window {
-    property string requestIp: '127.0.0.1'
-    property string requestPort: '8000'
-    property string requestType: 'POST'
-    property string requestServiceName: 'gateway_tasks'
-    property string timeToRepeat: '1'
-    property alias requestRepeat: updaterLogs.repeat
-    property string requestData:
-        '{\"port\":\"8008\",
-        \"method\":\"route_services\",
-        \"service\":\"log_reader_tasks\",
-        \"return\":\"logs\",
-        \"uuid":\"' + footer.uuid +'\"}'
-
     id: mainWindow
     visible: true
     width: 520
@@ -34,7 +21,7 @@ Window {
     //загрузка формы
     Loader{
         Component.onCompleted: {
-          qmlApp.requestToLoadHistory()
+          //
         }
     }
     Connections {
@@ -47,26 +34,9 @@ Window {
           footer.printLogs(data)
         }
 
-        onUpdateFieldsHistory:{
-            body.updateDataFromHistory(data)
-            widgetSettings.setCurrentTypeRequest(data["TYPE"])
-        }
-
-        onAddHistoryInList:{
-            body.addHistory(titleHistory)
-        }
-
     }
     Timer{
-        id: updaterLogs
-        repeat: false
-        interval: timeToRepeat + '000'
-        onTriggered: {
-            if(footer.uuid)
-                body.sendRequest(requestData, true)
-            else
-                updaterLogs.stop()
-        }
+
     }
 
     ////////шапка/////////

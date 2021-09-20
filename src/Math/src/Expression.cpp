@@ -174,11 +174,15 @@ void FVM::Math::Expression::calculateVoxelView()
     std::vector<std::vector<std::vector<double>>> voxelViews;
     std::vector<std::vector<double>> matrixFunction;
     bool isFirst = true;
-    for(double row = mRanges[0].min; row <= mRanges[0].max; row += mRanges[0].step)
+    for(double row  = mRanges[0].min;
+               row <= mRanges[0].max;
+               row += mRanges[0].step)
     {
         std::vector<std::vector<double>> voxelRow;
         std::vector<double>              functionRow;
-        for(double column = mRanges[1].min; column <= mRanges[1].max; column += mRanges[1].step)
+        for(double column  = mRanges[1].min;
+                   column <= mRanges[1].max;
+                   column += mRanges[1].step)
         {
             std::vector<double> views = calculateLocalGeomCharacters({row, column});
             voxelRow.push_back(views);
