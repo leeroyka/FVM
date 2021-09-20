@@ -20,7 +20,7 @@ Installation
     make install
 Dependencies
 ------
-- [MathEvaluator]((https://github.com/KJ002/MathEvaluator)
+- [MathEvaluator](https://github.com/KJ002/MathEvaluator)
 - [simple-matrix](https://github.com/torin-carey/simple-matrix)
 
 TODO
